@@ -1,6 +1,3 @@
-### Sample README.md
-
-````markdown
 # Personalized Meal Planner
 
 ## Description
@@ -31,6 +28,7 @@ By automatically generating recipes based on these preferences, the app saves us
    git clone https://github.com/your-username/meal-planner.git
    cd meal-planner
    ```
+
 ````
 
 2. **Install the dependencies:**
@@ -73,3 +71,4 @@ This project integrates with the **Edamam Recipe API** to fetch recipes based on
 ## AI Credits
 
 Some code portions, especially related to UI design(CSS file) refinements and troubleshooting, were generated with assistance from AI tools.
+````
