@@ -70,7 +70,3 @@ This project integrates with the **Edamam Recipe API** to fetch recipes based on
 ## AI Credits
 
 Some code portions, especially related to UI design(CSS file) refinements and troubleshooting, were generated with assistance from AI tools.
-
-```
-
-```
