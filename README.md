@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+### Sample README.md
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+````markdown
+# Personalized Meal Planner
 
-## Available Scripts
+## Description
 
-In the project directory, you can run:
+**Personalized Meal Planner** is a web application designed to help users generate meal plans based on dietary preferences and caloric needs. It leverages the Edamam API to fetch a variety of recipes tailored to the user’s selected diet and maximum calorie intake. The project addresses the common problem of finding recipes that fit specific dietary restrictions or health goals, such as high-protein, low-fat, or low-carb diets, and makes meal planning easier and more personalized.
 
-### `npm start`
+## Problem it Solves
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Many people struggle to find recipes that match their dietary preferences or health goals, especially if they are following specific diets like low-carb or high-protein. This application allows users to:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Search for recipes by specifying their dietary needs (e.g., high-protein, low-fat).
+- Set a calorie limit for the meals.
+- Explore new meal ideas that fit within their daily nutritional requirements.
 
-### `npm test`
+By automatically generating recipes based on these preferences, the app saves users time and effort in finding suitable meals.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Setup Instructions
 
-### `npm run build`
+### Prerequisites:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js and npm installed on your machine.
+- A valid Edamam API key and app ID (you can sign up for these at [Edamam Developer Portal](https://developer.edamam.com/edamam-recipe-api)).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Steps to Set Up and Run the Project:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/meal-planner.git
+   cd meal-planner
+   ```
+````
 
-### `npm run eject`
+2. **Install the dependencies:**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+   ```bash
+   npm install
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Set up the Edamam API credentials:**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   - Create a `.env` file in the root of the project.
+   - Add the following lines to the `.env` file, replacing `your_app_id` and `your_app_key` with your actual Edamam credentials:
+     ```env
+     REACT_APP_EDAMAM_APP_ID=your_app_id
+     REACT_APP_EDAMAM_APP_KEY=your_app_key
+     ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. **Start the development server:**
 
-## Learn More
+   ```bash
+   npm start
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. **Access the app:**
+   - Open your browser and go to `http://localhost:3000/` to use the app.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## API Integration
 
-### Code Splitting
+This project integrates with the **Edamam Recipe API** to fetch recipes based on user input. The API allows users to search for recipes using various filters such as dietary preferences and caloric limits. The Edamam API provides detailed information about each recipe, including ingredients, nutritional data, and links to the full recipe instructions.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### How the Edamam API is Integrated:
 
-### Analyzing the Bundle Size
+- When the user submits the form, the app sends a request to the Edamam API with the user’s selected diet and calorie limit.
+- The API responds with a list of matching recipes, which are displayed on the page along with their images and links to the full recipe details.
+- Example of a request URL used in the project:
+  ```
+  https://api.edamam.com/api/recipes/v2?type=public&q=salad&app_id=your_app_id&app_key=your_app_key&diet=high-protein&calories=1000
+  ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## AI Credits
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Some code portions, especially related to UI design(CSS file) refinements and troubleshooting, were generated with assistance from AI tools.

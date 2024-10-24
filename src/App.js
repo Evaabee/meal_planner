@@ -1,92 +1,87 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./App.css";
 
-const API_KEY = "4c5adcd53cb0b941668ce5f53047c6fc"; // Replace with your actual API key
+const APP_ID = "e902103a";
+const APP_KEY = "4c5adcd53cb0b941668ce5f53047c6fc";
 
 function MealPlanner() {
-  const [diet, setDiet] = useState("vegetarian"); // Set default diet
-  const [calories, setCalories] = useState(""); // For caloric input
-  const [recipes, setRecipes] = useState([]); // To store the fetched recipes
-  const [ingredients, setIngredients] = useState([]); // To store ingredients for the shopping list
+  const [diet, setDiet] = useState("high-protein"); //set default diet type
+  const [calories, setCalories] = useState("1000");
+  const [recipes, setRecipes] = useState([]); // store fetched recipes
 
-  // Function to fetch recipes based on user input
   const fetchRecipes = () => {
-    const url = `https://api.spoonacular.com/recipes/complexSearch?diet=${diet}&maxCalories=${calories}&number=5&apiKey=${API_KEY}`;
-    axios
-      .get(url)
-      .then((response) => setRecipes(response.data.results)) // Store recipes in state
-      .catch((error) => console.error(error));
-  };
+    const url = `https://api.edamam.com/api/recipes/v2?type=public&q=salad&app_id=${APP_ID}&app_key=${APP_KEY}&diet=${diet}&calories=${calories}`;
 
-  // Function to fetch ingredients for a selected recipe
-  const fetchIngredients = (recipeId) => {
-    const url = `https://api.spoonacular.com/recipes/${recipeId}/ingredientWidget.json?apiKey=${API_KEY}`;
     axios
       .get(url)
       .then((response) => {
-        console.log("Ingredients:", response.data.ingredients);
-        setIngredients(response.data.ingredients); // Store ingredients in state
+        console.log(response.data.hits);
+        setRecipes(response.data.hits); //store fetched recipes
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error("Error fetching recipes from Edamam:", error);
+      });
   };
 
   return (
-    <div>
-      <h1>Simple Meal Planner</h1>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          fetchRecipes();
-        }}
-      >
-        <label>
-          Diet:
-          <select value={diet} onChange={(e) => setDiet(e.target.value)}>
-            <option value="vegetarian">Vegetarian</option>
-            <option value="vegan">Vegan</option>
-            <option value="gluten free">Gluten-Free</option>
-            <option value="paleo">Paleo</option>
-          </select>
-        </label>
-        <label>
-          Max Calories:
-          <input
-            type="number"
-            value={calories}
-            onChange={(e) => setCalories(e.target.value)}
-            placeholder="e.g. 500"
-          />
-        </label>
-        <button type="submit">Search Recipes</button>
-      </form>
+    <div className="meal-planner">
+      <h1>Personalized Meal Planner</h1>
+      <div className="form-container">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            fetchRecipes();
+          }}
+        >
+          <div className="form-group">
+            <label>Diet:</label>
+            <select value={diet} onChange={(e) => setDiet(e.target.value)}>
+              <option value="high-protein">High-Protein</option>
+              <option value="low-fat">Low-Fat</option>
+              <option value="low-carb">Low-Carb</option>
+              <option value="balanced">Balanced</option>
+            </select>
+          </div>
 
+          <div className="form-group">
+            <label>Max Calories:</label>
+            <input
+              type="number"
+              value={calories}
+              onChange={(e) => setCalories(e.target.value)}
+              placeholder="e.g. 500"
+            />
+          </div>
+
+          <button type="submit">Search Recipes</button>
+        </form>
+      </div>
       <h2>Recipes</h2>
       <ul>
-        {recipes.map((recipe) => (
-          <li key={recipe.id}>
-            <h3>{recipe.title}</h3>
-            <img src={recipe.image} alt={recipe.title} width="100" />
-            <br />
-            <button onClick={() => fetchIngredients(recipe.id)}>
-              Get Ingredients
-            </button>
-          </li>
-        ))}
+        {recipes.length > 0 ? (
+          recipes.map((recipeData) => (
+            <li key={recipeData.recipe.uri}>
+              <h3>{recipeData.recipe.label}</h3>
+              <img
+                src={recipeData.recipe.image}
+                alt={recipeData.recipe.label}
+                width="100"
+              />
+              <br />
+              <a
+                href={recipeData.recipe.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Recipe
+              </a>
+            </li>
+          ))
+        ) : (
+          <p>No recipes found. Try adjusting your search criteria.</p>
+        )}
       </ul>
-
-      {ingredients.length > 0 && (
-        <>
-          <h2>Ingredients for Shopping List</h2>
-          <ul>
-            {ingredients.map((ingredient, index) => (
-              <li key={index}>
-                {ingredient.name}: {ingredient.amount.metric.value}{" "}
-                {ingredient.amount.metric.unit}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
     </div>
   );
 }
